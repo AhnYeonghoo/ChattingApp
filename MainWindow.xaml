@@ -7,6 +7,48 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="270"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" >
+            <StackPanel>
+                <Border BorderThickness="1,1,1,0" BorderBrush="Black" >
+                    <TextBlock Text="User" TextAlignment="Center" Height="20" />
+                </Border>
+
+                <Border BorderThickness="1,1,1,1" BorderBrush="Black">
+                    <ListView x:Name="UserListView" BorderThickness="0" />
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <StackPanel>
+                <Border BorderThickness="0,1,1,0" BorderBrush="Black">
+                    <TextBlock Text="AccessLog" TextAlignment="Center" Height="20" />
+                </Border>
+
+                <Border BorderThickness="0,1,1,0" BorderBrush="Black" Height="500" >
+                    <ListView x:Name="AccessLogListView" BorderThickness="0" />
+                </Border>
+
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Column="2">
+            <StackPanel>
+                <Border BorderThickness="0,1,1,0" BorderBrush="Black">
+                    <TextBlock Text="MainLog" TextAlignment="Center" Height="20" />
+                </Border>
+                <Border BorderThickness="0,1,1,0" BorderBrush="Black" >
+                    <ListView x:Name="ChattingLogListView" BorderThickness="0" />
+                </Border>
+            </StackPanel>
+        </Grid>
+
 
     </Grid>
 </Window>

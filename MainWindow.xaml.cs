@@ -29,10 +29,10 @@ namespace ChattingApp
             InitializeComponent();
             MainServerStart();
             ClientManager.messageParsingAction += MessageParsing;
-            ClientManager.ChangeListViewAction += ChangeListView;
+            ClientManager.changeListViewAction += ChangeListView;
             ChattingLogListView.ItemsSource = chattingLogList;
             UserListView.ItemsSource = AccessLogList;
-            conntectCheckThread = new Task(ConnectChackLoop);
+            conntectCheckThread = new Task(ConnectCheckLoop);
             conntectCheckThread.Start();
         }
 
@@ -48,7 +48,7 @@ namespace ChattingApp
                         byte[] sendByteData = new byte[sendStringData.Length];
                         sendByteData = Encoding.Default.GetBytes(sendStringData);
 
-                        item.Value.tcpClient.GetStream().Write().Write(sendByteData, 0, sendByteData.Length);
+                        item.Value.tcpClient.GetStream().Write(sendByteData, 0, sendByteData.Length);
                     }
                     catch (Exception e)
                     {
@@ -59,7 +59,7 @@ namespace ChattingApp
             }
         }
 
-        private void RemoveCLient(ClientData targetClient)
+        private void RemoveClient(ClientData targetClient)
         {
             ClientData result = null;
             ClientManager.clientDic.TryRemove(targetClient.clientNumber, out result);
@@ -101,7 +101,7 @@ namespace ChattingApp
             }
         }
 
-        private void MessageParsing(stirng sender, string message)
+        private void MessageParsing(string sender, string message)
         {
             lock (lockObj)
             {
@@ -143,7 +143,7 @@ namespace ChattingApp
                         string groupLogMessage = string.Format(@"[{0}] [{1}] -> [{2}] , {3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), groupSplit[0], el, splitedMsg[1]);
                         ChangeListView(groupLogMessage, StaticDefine.ADD_CHATTING_LIST);
 
-                        receiverNumber = GetClinetNumber(el);
+                        receiverNumber = GetClientNumber(el);
 
                         parsedMessage = string.Format("{0}<GroupChattingStart>", receiver);
                         byte[] sendGroupByteData = Encoding.Default.GetBytes(parsedMessage);
@@ -165,7 +165,7 @@ namespace ChattingApp
                         string groupLogMessage = string.Format(@"[{0}] [{1}] -> [{2}] , {3}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), groupSplit[0], el, splitedMsg[1]);
                         ChangeListView(groupLogMessage, StaticDefine.ADD_CHATTING_LIST);
 
-                        receiverNumber = GetClinetNumber(el);
+                        receiverNumber = GetClientNumber(el);
 
                         parsedMessage = string.Format("{0}<{1}>", receiver, splitedMsg[1]);
                         byte[] sendGroupByteData = Encoding.Default.GetBytes(parsedMessage);
@@ -175,8 +175,8 @@ namespace ChattingApp
                 }
 
 
-                senderNumber = GetClinetNumber(sender);
-                receiverNumber = GetClinetNumber(receiver);
+                senderNumber = GetClientNumber(sender);
+                receiverNumber = GetClientNumber(receiver);
 
 
                 if (senderNumber == -1 || receiverNumber == -1)

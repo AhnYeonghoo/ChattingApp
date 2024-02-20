@@ -12,5 +12,6 @@ namespace ChattingApp
         public const int ADD_ACCESS_LIST = 1;
         public const int ADD_USER_LIST = 2;
         public const int REMOVE_USER_LIST = 3;
+        // 주석 색
     }
 }
